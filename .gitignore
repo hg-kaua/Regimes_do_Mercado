@@ -1,19 +1,51 @@
 # Ambiente e caches Python
 .venv/
 venv/
+env/
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
 .ipynb_checkpoints/
+*.egg-info/
+build/
+dist/
 
-# Segredos e configurações locais
+# Segredos, credenciais e configurações locais
 .env
+.env.*
+!.env.example
 .streamlit/secrets.toml
+.aws/
+credentials*
+*.pem
+*.key
+*.p12
+*token*.json
+*secret*
+
+# Dados, resultados e artefatos gerados localmente (reconstruídos pelos scripts)
+data/
+reports/
+artifacts/
+*.zip
+
+# Temporários e logs
+*.log
+*.tmp
+*.bak
+*.swp
+~$*
+.~lock.*
+tmp/
+temp/
 
 # Sistema operacional / editores
 .DS_Store
 Thumbs.db
 desktop.ini
 .vscode/
-
-# Versionamento de data/ e artifacts/ será decidido na Etapa 01
+.idea/
