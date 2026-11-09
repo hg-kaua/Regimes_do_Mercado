@@ -33,8 +33,29 @@ tests/               testes automatizados (sem acesso à rede)
 python -m venv .venv
 # Windows: .venv\Scripts\activate   |   Linux/macOS: source .venv/bin/activate
 python -m pip install -r requirements.txt
+python -m pip install -e .
 ```
 
 ## Execução
 
-Instruções adicionadas conforme os módulos forem implementados.
+Parâmetros em `config/config.yaml` (a data final do período está congelada para reprodutibilidade).
+
+### 1. Coleta e validação dos dados
+
+```bash
+python -m regimes.data collect   # baixa yfinance e arquivos COTAHIST da B3; grava snapshots brutos imutáveis + metadados (SHA-256)
+python -m regimes.data build     # valida, confere yfinance x B3 e gera data/processed/bova11_daily.csv + quality_report.json
+python -m regimes.data recheck   # (opcional) nova consulta ao yfinance comparada ao snapshot
+```
+
+`collect` só grava novos snapshots se ainda não existirem (nunca sobrescreve). Os arquivos anuais da B3 somam cerca de 0,5 GB.
+
+A conferência entre as fontes identificou falhas pontuais no Yahoo Finance (candles sem negociação, pregões ausentes). Por isso os indicadores usam o OHLCV oficial da B3 (`features.source: b3`); o yfinance permanece como coleta preservada e conferida. Nenhuma linha é removida: inconsistências viram colunas `flag_*`.
+
+## Testes
+
+```bash
+python -m pytest
+```
+
+Os testes não acessam a rede: usam dados sintéticos e uma pequena amostra real do layout COTAHIST.
