@@ -52,6 +52,23 @@ python -m regimes.data recheck   # (opcional) nova consulta ao yfinance comparad
 
 A conferência entre as fontes identificou falhas pontuais no Yahoo Finance (candles sem negociação, pregões ausentes). Por isso os indicadores usam o OHLCV oficial da B3 (`features.source: b3`); o yfinance permanece como coleta preservada e conferida. Nenhuma linha é removida: inconsistências viram colunas `flag_*`.
 
+### 2. Indicadores e análise estatística
+
+```bash
+python -m regimes.eda
+```
+
+Calcula, por pregão `t` e usando apenas dados até `t`:
+
+| Indicador | Definição |
+|---|---|
+| `log_return` | `ln(C_t / C_{t-1})` |
+| `volatility_20` | desvio-padrão amostral dos últimos 20 log-retornos |
+| `dist_sma_20` | `C_t / MM20_t - 1` (média móvel simples de 20 pregões, inclui `t`) |
+| `rel_volume_20` | `ln(V_t / média de V nos 20 pregões anteriores)` |
+
+Gera `data/processed/features.csv`, tabelas em `reports/etapa02/` (estatísticas descritivas, covariância, correlações, extremos) e figuras em `reports/figures/etapa02/`.
+
 ## Testes
 
 ```bash
