@@ -162,6 +162,28 @@ def extremes(feat: pd.DataFrame, extreme: dict, path: Path, source: str) -> Path
     return _finish(fig, path, source)
 
 
+SPLIT_COLORS = {"train": SERIES_1, "validation": SERIES_2, "test": "#1baf7a"}
+SPLIT_LABELS = {"train": "Treino", "validation": "Validação", "test": "Teste"}
+
+
+def split_overview(df: pd.DataFrame, path: Path, source: str) -> Path:
+    """Fechamento colorido por conjunto (treino/validação/teste) com rótulos diretos."""
+    _style()
+    fig, ax = plt.subplots(figsize=(11, 3.8))
+    for name, color in SPLIT_COLORS.items():
+        part = df[df["split"] == name]
+        n = len(part)
+        ax.plot(part["date"], part["close"], color=color, lw=1.0,
+                label=f"{SPLIT_LABELS[name]} ({part['date'].min():%d/%m/%Y}–"
+                      f"{part['date'].max():%d/%m/%Y}, n = {n})")
+        ax.axvline(part["date"].min(), color=GRID, lw=1.0, zorder=0)
+    ax.set_title("Divisão cronológica 70/15/15 (após remover o aquecimento das janelas)")
+    ax.set_ylabel("R$ por cota")
+    ax.legend(loc="upper left")
+    _dates(ax)
+    return _finish(fig, path, source)
+
+
 def indicators_panel(feat: pd.DataFrame, columns: list[str], path: Path, source: str) -> Path:
     """Pequenos múltiplos: um painel por indicador, eixo de tempo compartilhado."""
     _style()

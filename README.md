@@ -69,6 +69,23 @@ Calcula, por pregão `t` e usando apenas dados até `t`:
 
 Gera `data/processed/features.csv`, tabelas em `reports/etapa02/` (estatísticas descritivas, covariância, correlações, extremos) e figuras em `reports/figures/etapa02/`.
 
+### 3. Divisão temporal e padronização
+
+```bash
+python -m regimes.preprocessing
+```
+
+- Remove explicitamente as linhas iniciais sem indicadores definidos (aquecimento das janelas de 20 pregões); valores ausentes após esse trecho interrompem a execução.
+- Divide em blocos cronológicos de 70 % (treino), 15 % (validação) e 15 % (teste), sem embaralhar.
+- Ajusta o `StandardScaler` **somente no treino** e aplica a mesma transformação à validação e ao teste.
+- Grava `data/processed/dataset_etapa03.csv` (datas, conjunto, indicadores originais e padronizados), o scaler em `artifacts/etapa03/scaler.joblib` e verificações em `reports/etapa03/`.
+
+### Ordem completa
+
+```bash
+python -m regimes.data collect && python -m regimes.data build && python -m regimes.eda && python -m regimes.preprocessing
+```
+
 ## Testes
 
 ```bash
