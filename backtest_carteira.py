@@ -186,9 +186,10 @@ def executar_backtest(retornos_percentuais, pesos, resumo_otimizacao, referencia
             "resumo_backtest.csv": resumo}, posicoes
 
 
-def conferir_com_precos(posicoes, pesos, capital, pasta=PASTA_DADOS):
-    """Confere o buy and hold com os preços salvos: posição = alocação × P_t / P_formação."""
-    precos = ler_tabela(Path(pasta) / "precos_semanais.csv")
+def conferir_com_precos(posicoes, pesos, capital, pasta=PASTA_DADOS, *, precos=None):
+    """Confere posição = alocação × P_t / P_formação, com preços em memória ou CSV."""
+    if precos is None:
+        precos = ler_tabela(Path(pasta) / "precos_semanais.csv")
     for estrategia, coluna in ESTRATEGIAS.items():
         tabela = posicoes[estrategia]
         relativos = precos.loc[tabela.index, tabela.columns] / precos.loc[tabela.index[0], tabela.columns]

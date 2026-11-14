@@ -1,8 +1,12 @@
-pandas
-yfinance
-numpy
-scikit-learn
-matplotlib
-streamlit
-plotly
+# Versões testadas (Python 3.14). Fixadas para reprodutibilidade dos resultados e testes.
+pandas==3.1.1
+numpy==2.5.4
+yfinance==1.8.0
+scikit-learn==1.9.1
+matplotlib==3.11.2
+streamlit==1.67.0
+plotly==7.1.0
 PyPortfolioOpt==1.6.0
+# Otimização: o projeto exige o solver CLARABEL (sem solver alternativo).
+cvxpy==1.9.3
+clarabel==0.11.1
