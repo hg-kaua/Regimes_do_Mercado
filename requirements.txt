@@ -5,3 +5,4 @@ scikit-learn
 matplotlib
 streamlit
 plotly
+PyPortfolioOpt==1.6.0
