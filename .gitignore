@@ -28,6 +28,7 @@ credentials*
 *secret*
 
 # Dados, resultados e artefatos gerados localmente (reconstruídos pelos scripts)
+dados/
 data/
 reports/
 artifacts/
@@ -49,3 +50,9 @@ Thumbs.db
 desktop.ini
 .vscode/
 .idea/
+
+# Documentos internos, caso sejam copiados para a raiz por engano
+Instrucoes_Codex/
+docs/
+prompts/
+CLAUDE.md
